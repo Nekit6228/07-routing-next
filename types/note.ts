@@ -13,4 +13,4 @@ export interface NewNote {
   tag: Tag;
 }
 
-export type Tag = "Work" | "Personal" | "Meeting" | "Shopping" | "Todo";
+export type Tag = "All" | "Work" | "Personal" | "Meeting" | "Shopping" | "Todo";
