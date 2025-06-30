@@ -31,7 +31,6 @@ export default function NotesClient({ initialData, initialTag }: NotesClientProp
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [debouncedSearchTerm] = useDebounce(inputValue, 500);
 
-
   const currentTag = initialTag === 'All' ? undefined : (initialTag as Tag);
 
   useEffect(() => {
@@ -73,7 +72,7 @@ export default function NotesClient({ initialData, initialTag }: NotesClientProp
   return (
     <div className={css.app}>
       <header className={css.toolbar}>
-        <SearchBox value={inputValue} onSearch={handleSearch} />
+        <SearchBox value={inputValue} onChange={handleSearch} />
         {totalPages > 0 && (
           <Pagination
             totalPages={totalPages}
@@ -82,10 +81,12 @@ export default function NotesClient({ initialData, initialTag }: NotesClientProp
           />
         )}
         <button onClick={() => setIsModalOpen(true)} className={css.button}>
-          Create note +
+          Create...
         </button>
       </header>
+
       <NoteList notes={notes} />
+
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
           <NoteForm onClose={() => setIsModalOpen(false)} />
