@@ -2,7 +2,15 @@ export interface Note {
   id: number;
   title: string;
   content: string;
-  tag: string;
   createdAt: string;
   updatedAt: string;
+  tag: string;
 }
+
+export interface NewNote {
+  title: string;
+  content: string;
+  tag: Tag;
+}
+
+export type Tag = "Work" | "Personal" | "Meeting" | "Shopping" | "Todo";

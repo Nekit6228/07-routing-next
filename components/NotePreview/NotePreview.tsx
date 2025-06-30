@@ -1,50 +1,24 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchNoteById } from "@/lib/api";
-import { useRouter } from "next/navigation";
-import css from "./NotePreview.module.css";
-import { useCallback } from "react";
+import css from './NotePreview.module.css';
+import type { Note } from '@/types/note';
 
-type Props = {
-  id: number;
-};
+interface NotePreviewContentProps {
+  note: Note;
+}
 
-export default function NotePreview({ id }: Props) {
-  const router = useRouter();
-  const handleClose = useCallback(() => {
-    router.back();
-  }, [router]);
-
-  const {
-    data: note,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["note", id],
-    queryFn: () => fetchNoteById(id),
-    refetchOnMount: false,
-  });
-
-  if (isLoading) return <p>Loading, please wait...</p>;
-  if (isError || !note) return <p>Something went wrong.</p>;
-
-  const formattedDate =
-    note.updatedAt === note.createdAt
-      ? `Created at: ${new Date(note.createdAt).toLocaleString("uk-UA")}`
-      : `Updated at: ${new Date(note.updatedAt).toLocaleString("uk-UA")}`;
-
+export default function NotePreviewContent({ note }: NotePreviewContentProps) {
   return (
-    <div className={css.container}>
-      <div className={css.item}>
-        <button onClick={handleClose} className={css.backBtn}>
-          go Back
-        </button>
-        <div className={css.header}>
-          <h2>{note.title}</h2>
-        </div>
-        <p className={css.content}>{note.content}</p>
-        <p className={css.date}>{formattedDate}</p>
+    <div className={css.preview}>
+      <h2 className={css.title}>{note.title}</h2>
+      <span className={`${css.tag} ${css[note.tag.toLowerCase()]}`}>
+        {note.tag}
+      </span>
+      <div className={css.content}>{note.content}</div>
+      <div className={css.meta}>
+        <span>Created: {new Date(note.createdAt).toLocaleString()}</span>
+        {note.createdAt !== note.updatedAt && (
+          <span>Updated: {new Date(note.updatedAt).toLocaleString()}</span>
+        )}
       </div>
     </div>
   );
 }
-

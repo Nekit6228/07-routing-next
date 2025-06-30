@@ -1,28 +1,38 @@
-"use client";
-import { useState } from "react";
-import css from "./TagsMenu.module.css";
-import Link from "next/link";
-import { tagMenu } from "@/app/const/constants";
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import css from './TagsMenu.module.css';
+import type { Tag } from '@/types/note';
+
+const tags: Tag[] = ["All", "Work", "Personal", "Meeting", "Shopping", "Todo"];
 
 export default function TagsMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const toggleMenu = () => setIsOpen(!isOpen);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleLinkClick = () => {
+    setIsOpen(false); 
+  };
 
   return (
     <div className={css.menuContainer}>
-      <button onClick={toggleMenu} className={css.menuButton}>
+      <button className={css.menuButton} onClick={toggleMenu} aria-expanded={isOpen}>
         Notes ▾
       </button>
       {isOpen && (
         <ul className={css.menuList}>
-          {tagMenu.map((tag) => (
+          {tags.map((tag) => (
             <li key={tag} className={css.menuItem}>
               <Link
-                onClick={toggleMenu}
                 href={`/notes/filter/${tag}`}
                 className={css.menuLink}
+                onClick={handleLinkClick}
               >
-                {tag}
+                {tag === 'All' ? 'All notes' : tag}
               </Link>
             </li>
           ))}

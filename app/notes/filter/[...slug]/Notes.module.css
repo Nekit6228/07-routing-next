@@ -1,0 +1,41 @@
+
+
+.app {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button {
+  background-color: #0070f3;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: #005bb5;
+}
+
+.loaderOverlay,
+.errorOverlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
